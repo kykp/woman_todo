@@ -5,17 +5,38 @@ import {
   ITodo,
   toggleTodo,
   changeTodoTextFields,
+  setExpiredTodo,
 } from "../../store/todo/todosSlice";
 import { RiDeleteBin7Line as DeleteBox } from "react-icons/ri";
 import { MdOutlineCloudDone as Completed } from "react-icons/md";
 import { useAppDispatch } from "../../helper/hook";
 import clsx from "clsx";
+import dayjs from "dayjs";
 
-export const TodoItem = ({ id, title, textBody, date, isCompeted }: ITodo) => {
+const currentDate = new Date().toISOString().split("T")[0];
+
+export const TodoItem = ({
+  id,
+  title,
+  textBody,
+  date,
+  isCompeted,
+  isExpiried,
+}: ITodo) => {
   const [todoTextFields, setTodoTextFields] = useState({
     newTitle: title,
     newTextBody: textBody,
   });
+
+  const date1 = dayjs(currentDate);
+  const date2 = dayjs(date);
+
+  useEffect((): void => {
+    if (date2.diff(date1) < 0) {
+      dispatch(setExpiredTodo({ id }));
+    }
+  }, [date]);
+
   const dispatch = useAppDispatch();
 
   const onHandleDeleteTodo = () => {
@@ -42,7 +63,13 @@ export const TodoItem = ({ id, title, textBody, date, isCompeted }: ITodo) => {
   }, [todoTextFields]);
 
   return (
-    <li className={clsx(styles.todo_item, isCompeted ? styles.active : null)}>
+    <li
+      className={clsx(
+        styles.todo_item,
+        isCompeted ? styles.active : null,
+        isExpiried ? styles.expired : null
+      )}
+    >
       <div className={styles.block_controls}>
         <Completed
           title="Пометить как выполнено"
@@ -59,11 +86,20 @@ export const TodoItem = ({ id, title, textBody, date, isCompeted }: ITodo) => {
             <span>Completed</span>
           </div>
         )}
+        {isExpiried && (
+          <div className={styles.todo_status_expiried}>
+            <span>Expiried</span>
+          </div>
+        )}
       </div>
       <div className={styles.header}>
         <input
           value={todoTextFields.newTitle}
-          className={clsx(styles.title, isCompeted ? styles.active : null)}
+          className={clsx(
+            styles.title,
+            isCompeted ? styles.active : null,
+            isExpiried ? styles.expired : null
+          )}
           name="newTitle"
           onChange={onHandleChangeTextFields}
         />
@@ -75,7 +111,11 @@ export const TodoItem = ({ id, title, textBody, date, isCompeted }: ITodo) => {
           name="newTextBody"
           value={todoTextFields.newTextBody}
           onChange={onHandleChangeTextFields}
-          className={clsx(styles.title, isCompeted ? styles.active : null)}
+          className={clsx(
+            styles.title,
+            isCompeted ? styles.active : null,
+            isExpiried ? styles.expired : null
+          )}
         />
       </div>
     </li>

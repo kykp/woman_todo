@@ -21,6 +21,10 @@
     background-color: $bgc-main;
     color: white; 
 }
+.expired {
+    background-color: red;
+    color: white; 
+}
 .block_controls{ 
     display: flex;
     justify-content: center;
@@ -49,6 +53,20 @@
     border-radius: 5px; 
     color: black;
     background: rgb(0, 255, 13);
+    font-size: 10px;
+    top: -5px;
+    right: 0;
+    position: absolute; 
+}
+.todo_status_expiried{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 20px;
+    border-radius: 5px; 
+    color: rgb(255, 255, 255);
+    background: rgb(1, 1, 1);
     font-size: 10px;
     top: -5px;
     right: 0;

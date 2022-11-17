@@ -7,12 +7,13 @@ export interface ITodo {
   isCompeted: boolean;
   file: boolean;
   date: string;
+  isExpiried: boolean;
 }
-type GamesState = {
+type TodoState = {
   todo: ITodo[];
 };
 
-const initialState: GamesState = {
+const initialState: TodoState = {
   todo: [],
 };
 
@@ -33,6 +34,14 @@ export const todosSlice = createSlice({
       );
       if (currentTodo) {
         currentTodo.isCompeted = !currentTodo.isCompeted;
+      }
+    },
+    setExpiredTodo: (state, action: PayloadAction<{ id: string }>) => {
+      const currentTodo = state.todo.find(
+        (todo) => todo.id === action.payload.id
+      );
+      if (currentTodo) {
+        currentTodo.isExpiried = true;
       }
     },
     changeTodoTextFields: (
@@ -63,8 +72,13 @@ export const todosSlice = createSlice({
   // },
 });
 
-export const { addTodo, deleteTodo, toggleTodo, changeTodoTextFields } =
-  todosSlice.actions;
+export const {
+  addTodo,
+  deleteTodo,
+  toggleTodo,
+  changeTodoTextFields,
+  setExpiredTodo,
+} = todosSlice.actions;
 
 export default todosSlice.reducer;
 

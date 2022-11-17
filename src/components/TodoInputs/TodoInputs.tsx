@@ -14,6 +14,7 @@ const deafultTodo: ITodo = {
   isCompeted: false,
   file: false,
   date: "",
+  isExpiried: false,
 };
 
 export const TodoInputs = () => {

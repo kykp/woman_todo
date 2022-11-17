@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, AnyAction } from "@reduxjs/toolkit";
-
+import { addPostFireBase } from "./asyncActions";
 export interface ITodo {
   id: string;
   title: string;
@@ -57,19 +57,14 @@ export const todosSlice = createSlice({
       }
     },
   },
-  // extraReducers: (builder) => {
-  //   builder
-  //     .addCase(fetchGames.fulfilled, (state, action) => {
-  //       state.games = action.payload;
-  //       state.loading = false;
-  //     })
-  //     .addCase(fetchGames.pending, (state) => {
-  //       state.loading = true;
-  //     })
-  //     .addCase(fetchGames.rejected, (state) => {
-  //       state.error = "Warning";
-  //     });
-  // },
+  extraReducers: (builder) => {
+    builder
+      .addCase(addPostFireBase.fulfilled, (state, action) => {
+        console.log(action.payload);
+      })
+      .addCase(addPostFireBase.pending, (state) => {})
+      .addCase(addPostFireBase.rejected, (state) => {});
+  },
 });
 
 export const {

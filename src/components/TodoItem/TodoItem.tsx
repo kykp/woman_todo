@@ -63,7 +63,7 @@ export const TodoItem = ({ id, title, textBody, date, isCompeted }: ITodo) => {
       <div className={styles.header}>
         <input
           value={todoTextFields.newTitle}
-          className={styles.title}
+          className={clsx(styles.title, isCompeted ? styles.active : null)}
           name="newTitle"
           onChange={onHandleChangeTextFields}
         />
@@ -75,6 +75,7 @@ export const TodoItem = ({ id, title, textBody, date, isCompeted }: ITodo) => {
           name="newTextBody"
           value={todoTextFields.newTextBody}
           onChange={onHandleChangeTextFields}
+          className={clsx(styles.title, isCompeted ? styles.active : null)}
         />
       </div>
     </li>

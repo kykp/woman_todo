@@ -1,0 +1,64 @@
+@import "../../index.module.scss";
+
+.todo_inputs_block {
+    display: flex; 
+    flex-direction: column;
+    justify-content: center; 
+    width: 620px;
+    margin-top: 50px;
+    font-size: $fs-main; 
+    background: #FFFFFF;  
+}
+.title_and_time_block{
+    display: flex;
+    padding-bottom: 1px;
+    background: $bgc-main;
+}
+.title_input {  
+    flex-grow: 1;
+    padding: 0px 10px; 
+    
+}
+.date_input {  
+    width: 20px;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    
+}
+
+
+.body_title { 
+    display: flex;  
+    &_input { 
+        flex-grow: 1;
+        padding: 10px 10px;
+    }
+}
+.file_imgae_block{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    &:hover {
+        cursor: pointer;
+    }
+}
+.input_file {
+    width: 30px; 
+}
+ 
+.button {
+    display: flex;
+    float: right;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    width: 622px; 
+    height: 60px;    
+    transition: all 1s ease-in-out;
+    &:hover {
+        cursor: pointer;
+        color: white;
+        background-color: rgb(29, 81, 166);
+    }
+}

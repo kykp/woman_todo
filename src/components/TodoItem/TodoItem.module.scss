@@ -1,0 +1,80 @@
+@import "../../index.module.scss";
+
+.todo_item {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 15px;
+    height: fit-content;
+    min-height: 30px;
+    background: #FFFFFF; 
+    border-radius: 5px;
+    box-shadow: 0px 0px 14px rgba(112, 121, 153, 0.3); 
+    font-size: $fs-main;
+    padding: 10px 10px;
+    word-break: break-all;  
+    user-select: none;
+}
+.active {
+    background-color: $bgc-main;
+    color: white; 
+}
+.block_controls{ 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    gap: 20px;
+}
+.save_changes {
+    width: 200px;
+    height: 20px;
+    background: wheat;
+    position: absolute;
+    font-size: 15px;
+    top:0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.todo_status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 20px;
+    border-radius: 5px; 
+    color: black;
+    background: rgb(0, 255, 13);
+    font-size: 10px;
+    top: -5px;
+    right: 0;
+    position: absolute; 
+}
+.image {
+    &:hover {
+        cursor: pointer;
+    }
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+.body { 
+    margin-top: 5px;
+    padding-top: 5px;
+}
+.title{ 
+    padding: 2px 5px; 
+}
+.date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(112, 121, 153, 0.3);
+    width: 30%;
+    border-radius: 5px; 
+} 

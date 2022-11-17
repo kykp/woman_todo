@@ -1,0 +1,33 @@
+@import "../../index.module.scss";
+
+.wrapper {
+    width: 100%;
+    min-height: 100vh;
+    background: rgba(1, 1, 1, 0.642);
+    position: absolute;
+}
+
+.menu { 
+    width: 600px; 
+    min-height: 300px;
+    background: white;
+    border-radius: 15px;
+    margin: 0 auto;
+    margin-top: 300px;
+    position: relative;
+}
+.cross {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    width: 30px;  
+    top: -30px;
+    right: -30px; 
+    color: white;
+    position: absolute;
+
+    &:hover {
+        cursor: pointer;
+    }
+}

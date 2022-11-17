@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
+
+$bgc-main: #151515;
+$bgc-secondary: hsla(0,0%,100%,.07);
+$bgc-additional: #E5E5E5;;
+$main-text-color: black;
+$secondary-text-color: #444;
+$tertiary-text-color: rgb(192, 192, 192);
+$ff-primary: 'Poppins', sans-serif;  
+$fs-bigger-main : 50px;
+$fs-lm-main: 30px;
+$fs-main-title: 25px;
+$fs-main: 16px;
+$fs-low-resolution: 10px;
+$max-size-primary: 1920px;
+$mid-size-primary: 1100px;
+$min-size-primary: 600px;
+$mobile-size-primary: 400px;
+ 
+body {
+    font-family: $ff-primary;
+    color: $main-text-color;  
+    margin: 0;
+    background-color: $bgc-main;
+    text-rendering: optimizeLegibility;
+    box-sizing: border-box;  
+}
+
+input:focus, button:focus, textarea:focus, span:focus{
+    outline: none;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    font-size: inherit;
+}
+  
+  input, button {
+    border:none;
+    font-size: inherit;
+    font-family: inherit;
+}
+ul, li, p, span {
+    padding: 0; 
+    margin: 0;
+    list-style-type: none;
+    font-size: inherit;
+}
+  
+a {
+    outline: none;
+    color: $main-text-color; 
+    text-decoration: none;
+    font-size: inherit;
+  }
+  
+.page {
+    max-width: $max-size-primary;
+    margin: 0 auto;  
+}
+@media screen and (max-width: $mid-size-primary){
+    .page {
+        max-width: $mid-size-primary;
+    }
+}
+
+@media screen and (max-width: $min-size-primary){
+    .page {
+        max-width: $min-size-primary; 
+    } 
+}

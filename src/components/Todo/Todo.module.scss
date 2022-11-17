@@ -1,0 +1,17 @@
+@import "../../index.module.scss";
+
+.todo_page {
+    max-width: $max-size-primary; 
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+}
+.todo_items{
+    width: 620px;
+    height: 600px;
+    overflow-y: auto;
+    margin-top: 50px;
+    background-color: $bgc-additional;
+    border-radius: 15px;
+}

@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction, AnyAction } from "@reduxjs/toolkit";
-import { addPostFireBase } from "./asyncActions";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface ITodo {
   id: string;
   title: string;
@@ -57,14 +56,6 @@ export const todosSlice = createSlice({
       }
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(addPostFireBase.fulfilled, (state, action) => {
-        console.log(action.payload);
-      })
-      .addCase(addPostFireBase.pending, (state) => {})
-      .addCase(addPostFireBase.rejected, (state) => {});
-  },
 });
 
 export const {
@@ -76,7 +67,3 @@ export const {
 } = todosSlice.actions;
 
 export default todosSlice.reducer;
-
-function isError(action: AnyAction) {
-  return action.type.endsWith("rejected");
-}

@@ -1,33 +1,90 @@
-@import "../../index.module.scss";
-
-.wrapper {
+.popup{
+    position: fixed;
+    top:0;
+    left:0;
     width: 100%;
-    min-height: 100vh;
-    background: rgba(1, 1, 1, 0.642);
-    position: absolute;
-}
-
-.menu { 
-    width: 600px; 
-    min-height: 300px;
-    background: white;
-    border-radius: 15px;
-    margin: 0 auto;
-    margin-top: 300px;
-    position: relative;
-}
-.cross {
+    height: 100%; 
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 30px;
-    width: 30px;  
-    top: -30px;
-    right: -30px; 
-    color: white;
-    position: absolute;
+    background-color: rgba(0, 0, 0, 0.898);
+    z-index:200;
+}
 
-    &:hover {
+.popup_inner {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute; 
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    max-width: 500px; 
+    max-height: 600px;
+    background: rgb(255, 255, 255); 
+    box-shadow: 1px 1px 1px 2px rgba(72, 72, 72, 0.21);
+    border-radius: 10px;
+    color: black; 
+    
+    &__menu { 
+        max-width: 80%;
+        margin: 0 auto;
+        background-color: rgba(0, 0, 0, 0.832);
+        margin-top: 5px;
+        padding: 5px;
+        border-radius: 3px;
         cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        color: white;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.95);
+            color: rgb(52, 177, 255);
+        }
     }
 }
+
+.popup_inner .close_btn {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    cursor: pointer;
+    background: transparent;
+    transition: color 0.3s ease-in-out;
+    &:hover {
+        color:rgb(0, 140, 255);
+    }
+}
+
+.wrapper {  
+    padding: 10px 10px;
+}
+.block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    &_button {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+}
+.title {
+    width: 100%;
+    min-height: 100px;
+    padding: 10px 10px; 
+    border: 1px solid black;
+}
+.body {
+    width: 100%;
+    min-height: 300px;
+    padding: 10px 10px; 
+    border: 1px solid black;
+}
+.button {
+    border: 1px solid black;
+}
+ 

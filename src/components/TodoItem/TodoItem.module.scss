@@ -86,8 +86,13 @@
     padding-top: 5px;
 }
 .title{ 
-    padding: 2px 5px; 
-}
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 2px 5px;  
+    
+} 
 .date {
     display: flex;
     justify-content: center;
@@ -95,4 +100,5 @@
     background: rgba(112, 121, 153, 0.3);
     width: 30%;
     border-radius: 5px; 
+    max-height: 30px;
 } 

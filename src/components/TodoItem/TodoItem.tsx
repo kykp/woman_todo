@@ -9,9 +9,11 @@ import {
 } from "../../store/todo/todosSlice";
 import { RiDeleteBin7Line as DeleteBox } from "react-icons/ri";
 import { MdOutlineCloudDone as Completed } from "react-icons/md";
+import { FaPen as Change } from "react-icons/fa";
 import { useAppDispatch } from "../../helper/hook";
 import clsx from "clsx";
 import dayjs from "dayjs";
+import { Popup } from "../Popup/Popup";
 
 const currentDate = new Date().toISOString().split("T")[0];
 
@@ -23,11 +25,11 @@ export const TodoItem = ({
   isCompeted,
   isExpiried,
 }: ITodo) => {
-  const [todoTextFields, setTodoTextFields] = useState({
-    newTitle: title,
-    newTextBody: textBody,
-  });
+  const [showPopup, setShowPopup] = useState(false);
 
+  const onHandlePopup = () => {
+    setShowPopup(!showPopup);
+  };
   const date1 = dayjs(currentDate);
   const date2 = dayjs(date);
 
@@ -46,22 +48,6 @@ export const TodoItem = ({
     dispatch(toggleTodo({ id }));
   };
 
-  const onHandleChangeTextFields = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setTodoTextFields({ ...todoTextFields, [name]: value });
-  };
-
-  useEffect(() => {
-    dispatch(
-      changeTodoTextFields({
-        id,
-        title: todoTextFields.newTitle,
-        bodyText: todoTextFields.newTextBody,
-      })
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [todoTextFields]);
-
   return (
     <li
       className={clsx(
@@ -75,6 +61,11 @@ export const TodoItem = ({
           title="Пометить как выполнено"
           onClick={onHandleToggleTodo}
           className={styles.image}
+        />
+        <Change
+          title="Изменить задачу"
+          className={styles.image}
+          onClick={onHandlePopup}
         />
         <DeleteBox
           title="Удалить задачу"
@@ -93,31 +84,19 @@ export const TodoItem = ({
         )}
       </div>
       <div className={styles.header}>
-        <input
-          value={todoTextFields.newTitle}
-          className={clsx(
-            styles.title,
-            isCompeted ? styles.active : null,
-            isExpiried ? styles.expired : null
-          )}
-          name="newTitle"
-          onChange={onHandleChangeTextFields}
-        />
-
+        <span className={styles.title}>{title}</span>
         {date !== "" && <span className={styles.date}>{date}</span>}
       </div>
       <div className={styles.body}>
-        <input
-          name="newTextBody"
-          value={todoTextFields.newTextBody}
-          onChange={onHandleChangeTextFields}
-          className={clsx(
-            styles.title,
-            isCompeted ? styles.active : null,
-            isExpiried ? styles.expired : null
-          )}
-        />
+        <span className={styles.title}>{textBody}</span>
       </div>
+      <Popup
+        trigger={showPopup}
+        id={id}
+        title={title}
+        textBody={textBody}
+        onHandlePopup={onHandlePopup}
+      />
     </li>
   );
 };

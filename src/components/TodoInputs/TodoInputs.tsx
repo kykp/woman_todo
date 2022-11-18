@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import styles from "./TodoInputs.module.scss";
-import { getDatabase, ref, push, set } from "firebase/database";
 
 import { addTodo } from "../../store/todo/todosSlice";
 import { useAppDispatch } from "../../helper/hook";
 import { ITodo } from "../../store/todo/todosSlice";
 import { AiOutlineFileAdd } from "react-icons/ai";
 import { v4 } from "uuid";
-import { addPostFireBase } from "../../store/todo/asyncActions";
 
 const deafultTodo: ITodo = {
   id: "",
@@ -30,11 +28,8 @@ export const TodoInputs = () => {
     setTodoDate({ ...todoData, [name]: value, id: uniqueId, file: false });
   };
   const onHandleButtonClick = () => {
-    const database = getDatabase();
-    const reference = ref(database, `users/` + userId);
-
-    // dispatch(addTodo(todoData));
-    // setTodoDate(deafultTodo);
+    dispatch(addTodo(todoData));
+    setTodoDate(deafultTodo);
   };
   const onHandleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     if (e.key === "Enter") {

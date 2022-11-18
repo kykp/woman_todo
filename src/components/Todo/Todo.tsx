@@ -9,7 +9,6 @@ export const Todo = () => {
   const todos = useAppSelector(selectAllTodos);
 
   console.log(todos);
-  console.log("render TODO");
   return (
     <div className={styles.todo_page}>
       <ul className={styles.todo_items}>

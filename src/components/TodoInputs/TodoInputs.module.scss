@@ -35,18 +35,12 @@
         padding: 10px 10px;
     }
 }
-.file_imgae_block{
-    display: flex;
-    justify-content: center;
-    align-items: center; 
-    &:hover {
-        cursor: pointer;
-    }
-}
-.input_file {
-    width: 30px; 
-}
+.file_input { 
+    margin: 0 auto; 
+} 
  
+ 
+
 .button {
     display: flex;
     float: right;

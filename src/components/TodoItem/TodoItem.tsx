@@ -4,15 +4,16 @@ import {
   deleteTodo,
   ITodo,
   toggleTodo,
-  changeTodoTextFields,
   setExpiredTodo,
 } from "../../store/todo/todosSlice";
 import { RiDeleteBin7Line as DeleteBox } from "react-icons/ri";
 import { MdOutlineCloudDone as Completed } from "react-icons/md";
 import { FaPen as Change } from "react-icons/fa";
 import { useAppDispatch } from "../../helper/hook";
+import { deleteTodoFromDB, toggleTodoCompleted } from "../../helper/firebase";
 import clsx from "clsx";
 import dayjs from "dayjs";
+
 import { Popup } from "../Popup/Popup";
 
 const currentDate = new Date().toISOString().split("T")[0];
@@ -22,7 +23,7 @@ export const TodoItem = ({
   title,
   textBody,
   date,
-  isCompeted,
+  isCompleted,
   isExpiried,
 }: ITodo) => {
   const [showPopup, setShowPopup] = useState(false);
@@ -37,14 +38,18 @@ export const TodoItem = ({
     if (date2.diff(date1) < 0) {
       dispatch(setExpiredTodo({ id }));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [date]);
 
   const dispatch = useAppDispatch();
 
-  const onHandleDeleteTodo = () => {
+  const onHandleDeleteTodo = async () => {
     dispatch(deleteTodo({ id }));
+    deleteTodoFromDB(id);
   };
-  const onHandleToggleTodo = () => {
+
+  const onHandleToggleTodoCompleted = () => {
+    toggleTodoCompleted(id);
     dispatch(toggleTodo({ id }));
   };
 
@@ -52,14 +57,14 @@ export const TodoItem = ({
     <li
       className={clsx(
         styles.todo_item,
-        isCompeted ? styles.active : null,
+        isCompleted ? styles.active : null,
         isExpiried ? styles.expired : null
       )}
     >
       <div className={styles.block_controls}>
         <Completed
           title="Пометить как выполнено"
-          onClick={onHandleToggleTodo}
+          onClick={onHandleToggleTodoCompleted}
           className={styles.image}
         />
         <Change
@@ -72,7 +77,7 @@ export const TodoItem = ({
           className={styles.image}
           onClick={onHandleDeleteTodo}
         />
-        {isCompeted && (
+        {isCompleted && (
           <div className={styles.todo_status}>
             <span>Completed</span>
           </div>

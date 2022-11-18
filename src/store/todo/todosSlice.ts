@@ -3,8 +3,8 @@ export interface ITodo {
   id: string;
   title: string;
   textBody: string;
-  isCompeted: boolean;
-  file: boolean;
+  isCompleted: boolean;
+  file: File | null;
   date: string;
   isExpiried: boolean;
 }
@@ -20,6 +20,9 @@ export const todosSlice = createSlice({
   name: "todos",
   initialState,
   reducers: {
+    getTodosFromServer: (state, action) => {
+      state.todo = action.payload;
+    },
     addTodo: (state, action: PayloadAction<ITodo>) => {
       state.todo.push(action.payload);
     },
@@ -32,7 +35,7 @@ export const todosSlice = createSlice({
         (todo) => todo.id === action.payload.id
       );
       if (currentTodo) {
-        currentTodo.isCompeted = !currentTodo.isCompeted;
+        currentTodo.isCompleted = !currentTodo.isCompleted;
       }
     },
     setExpiredTodo: (state, action: PayloadAction<{ id: string }>) => {
@@ -64,6 +67,7 @@ export const {
   toggleTodo,
   changeTodoTextFields,
   setExpiredTodo,
+  getTodosFromServer,
 } = todosSlice.actions;
 
 export default todosSlice.reducer;

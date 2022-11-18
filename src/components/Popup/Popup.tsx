@@ -3,7 +3,7 @@ import styles from "./popup.module.scss";
 import { PopupProps } from "./typeProps";
 import { useAppDispatch } from "../../helper/hook";
 import { changeTodoTextFields } from "../../store/todo/todosSlice";
-
+import { saveNewTitleAndBody } from "../../helper/firebase";
 export const Popup = (props: PopupProps) => {
   const dispatch = useAppDispatch();
   const { id, title, textBody, onHandlePopup } = props;
@@ -13,6 +13,12 @@ export const Popup = (props: PopupProps) => {
     changedBody: textBody,
   });
 
+  const onHandleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+    if (e.key === "Enter") {
+      saveNewTodos();
+    }
+  };
+
   const onHandleChangeTextFields = (
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
@@ -21,6 +27,12 @@ export const Popup = (props: PopupProps) => {
   };
 
   const saveNewTodos = () => {
+    saveNewTitleAndBody(
+      id,
+      newTodoInputs.changedTitle,
+      newTodoInputs.changedBody
+    );
+
     dispatch(
       changeTodoTextFields({
         id,
@@ -31,7 +43,7 @@ export const Popup = (props: PopupProps) => {
     onHandlePopup();
   };
   return props.trigger ? (
-    <div className={styles.popup}>
+    <div className={styles.popup} onKeyDown={onHandleKeyDown}>
       <div className={styles.popup_inner}>
         <div className={styles.wrapper}>
           <div className={styles.block}>

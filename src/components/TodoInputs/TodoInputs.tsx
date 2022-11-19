@@ -1,28 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./TodoInputs.module.scss";
 
 import { addTodo } from "../../store/todo/todosSlice";
 import { useAppDispatch } from "../../helper/hook";
 import { ITodo } from "../../store/todo/todosSlice";
 import { v4 } from "uuid";
-import { addTodoToDB } from "../../helper/firebase";
-import { getDownloadURL, listAll, ref, uploadBytes } from "firebase/storage";
-import { storage } from "../../firebase";
+import { addTodoToDB, attachImages } from "../../helper/firebase";
 
 const deafultTodo: ITodo = {
   id: "",
   title: "",
   textBody: "",
   isCompleted: false,
-  file: null,
+  isFiled: false,
   date: "",
   isExpiried: false,
 };
-
-const MYid = "Konstantin-id";
 export const TodoInputs = () => {
   const [todoData, setTodoDate] = useState<ITodo>(deafultTodo);
-  const [filesUpload, setFilesUpload] = useState<any>([]);
+  const [filesUpload, setFilesUpload] = useState<File[]>([]);
   const [url, setUrl] = useState<string[]>([]);
 
   const dispatch = useAppDispatch();
@@ -32,11 +28,16 @@ export const TodoInputs = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setTodoDate({ ...todoData, [name]: value, id: uniqueId, file: null });
+    setTodoDate({
+      ...todoData,
+      [name]: value,
+      id: uniqueId,
+    });
   };
   const createTodo = async () => {
-    addTodoToDB(todoData);
+    attachImages(filesUpload, todoData.id);
     dispatch(addTodo({ ...todoData }));
+    addTodoToDB(todoData);
     setTodoDate(deafultTodo);
   };
   const onHandleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
@@ -46,43 +47,25 @@ export const TodoInputs = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const filesArray: any = e.target.files;
-    for (let i = 0; i < filesArray.length; i++) {
-      const newFile = filesArray[i];
-      setFilesUpload((prevState: any) => [...prevState, newFile]);
+    const filesArray = e.target.files;
+    if (filesArray) {
+      for (let i = 0; i < filesArray.length; i++) {
+        const newFile = filesArray[i];
+        setFilesUpload((prevState) => [...prevState, newFile]);
+      }
     }
   };
 
-  const imageSender = async () => {
-    filesUpload.map(async (file: any) => {
-      const imageRef = ref(storage, `${MYid}/${file.name}`);
-      await uploadBytes(imageRef, file).then(() => {
-        console.log("uploaded finished");
+  React.useEffect(() => {
+    if (filesUpload.length > 0) {
+      setTodoDate({
+        ...todoData,
+        isFiled: true,
       });
-    });
-  };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filesUpload.length]);
 
-  // useEffect(() => {
-  //   listAll(imagesListRef).then((resp) => {
-  //     resp.items.forEach((item) => {
-  //       getDownloadURL(item).then((url) => {
-  //         setUrl((prev) => [...prev, url]);
-  //       });
-  //     });
-  //   });
-  // }, []);
-
-  const getUrl = async () => {
-    const imagesListRef = ref(storage, `${MYid}/`);
-    listAll(imagesListRef).then((resp) => {
-      resp.items.forEach((item) => {
-        getDownloadURL(item).then((url) => {
-          setUrl((prev) => [...prev, url]);
-        });
-      });
-    });
-  };
-  console.log(url);
   return (
     <>
       <div className={styles.todo_inputs_block}>
@@ -126,8 +109,6 @@ export const TodoInputs = () => {
       <button onClick={createTodo} className={styles.button}>
         Enter
       </button>
-      <button onClick={imageSender}>ImageSend</button>
-      <button onClick={getUrl}>get Links</button>
     </>
   );
 };

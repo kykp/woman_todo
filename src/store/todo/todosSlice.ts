@@ -4,7 +4,7 @@ export interface ITodo {
   title: string;
   textBody: string;
   isCompleted: boolean;
-  file: File | null;
+  isFiled: boolean;
   date: string;
   isExpiried: boolean;
 }

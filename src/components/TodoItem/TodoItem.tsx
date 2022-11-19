@@ -10,12 +10,18 @@ import { RiDeleteBin7Line as DeleteBox } from "react-icons/ri";
 import { MdOutlineCloudDone as Completed } from "react-icons/md";
 import { FaPen as Change } from "react-icons/fa";
 import { useAppDispatch } from "../../helper/hook";
-import { deleteTodoFromDB, toggleTodoCompleted } from "../../helper/firebase";
+import {
+  deleteTodoFromDB,
+  getUrl,
+  toggleTodoCompleted,
+} from "../../helper/firebase";
 import clsx from "clsx";
 import dayjs from "dayjs";
 
 import { Popup } from "../Popup/Popup";
-
+import { FilesPopup } from "../TodoInputs/components/FilesPopup/FilesPopup";
+import { ref, getDownloadURL, listAll } from "firebase/storage";
+import { storage } from "../../firebase";
 const currentDate = new Date().toISOString().split("T")[0];
 
 export const TodoItem = ({
@@ -25,11 +31,28 @@ export const TodoItem = ({
   date,
   isCompleted,
   isExpiried,
+  isFiled,
 }: ITodo) => {
-  const [showPopup, setShowPopup] = useState(false);
+  const [showPopupChangeTitle, setShowPopupChangeTitle] = useState(false);
+  const [showPopupFiles, setShowPopupFiles] = useState(false);
+  const [urls, setUrls] = useState<string[]>([]);
 
-  const onHandlePopup = () => {
-    setShowPopup(!showPopup);
+  const onHandlePopupChangeTitle = () => {
+    setShowPopupChangeTitle(!showPopupChangeTitle);
+  };
+
+  const onHandlePopupShowFiles = async () => {
+    if (urls.length > 0) {
+      setUrls([]);
+    } else {
+      const array = await getUrl(id);
+      array.forEach(async (el) => {
+        const item = await getDownloadURL(el);
+        setUrls((prev) => [...prev, item]);
+      });
+    }
+
+    setShowPopupFiles(!showPopupFiles);
   };
   const date1 = dayjs(currentDate);
   const date2 = dayjs(date);
@@ -53,6 +76,7 @@ export const TodoItem = ({
     dispatch(toggleTodo({ id }));
   };
 
+  console.log(urls);
   return (
     <li
       className={clsx(
@@ -70,7 +94,7 @@ export const TodoItem = ({
         <Change
           title="Изменить задачу"
           className={styles.image}
-          onClick={onHandlePopup}
+          onClick={onHandlePopupChangeTitle}
         />
         <DeleteBox
           title="Удалить задачу"
@@ -87,6 +111,14 @@ export const TodoItem = ({
             <span>Expiried</span>
           </div>
         )}
+        {isFiled && (
+          <div
+            onClick={onHandlePopupShowFiles}
+            className={styles.todo_status_have_files}
+          >
+            <span>Files</span>
+          </div>
+        )}
       </div>
       <div className={styles.header}>
         <span className={styles.title}>{title}</span>
@@ -96,11 +128,19 @@ export const TodoItem = ({
         <span className={styles.title}>{textBody}</span>
       </div>
       <Popup
-        trigger={showPopup}
+        trigger={showPopupChangeTitle}
         id={id}
         title={title}
         textBody={textBody}
-        onHandlePopup={onHandlePopup}
+        onHandlePopup={onHandlePopupChangeTitle}
+      />
+      <FilesPopup
+        trigger={showPopupFiles}
+        id={id}
+        urls={urls}
+        title={title}
+        textBody={textBody}
+        onHandlePopup={onHandlePopupShowFiles}
       />
     </li>
   );

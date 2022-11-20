@@ -35,8 +35,10 @@ h1, h2, h3, h4, h5, h6, p, textarea {
     resize: none;
 }
   
-  input, button, textarea{
+input, button, textarea{
     border:none;
+    color: black;
+    background: white;
     font-size: inherit;
     font-family: inherit;
 }

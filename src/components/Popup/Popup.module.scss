@@ -1,3 +1,5 @@
+@import "../../index.module.scss";
+
 .popup{
     position: fixed;
     top:0;
@@ -24,7 +26,7 @@
     background: rgb(255, 255, 255); 
     box-shadow: 1px 1px 1px 2px rgba(72, 72, 72, 0.21);
     border-radius: 10px;
-    color: black; 
+    color: $main-text-color; 
     
     &__menu { 
         max-width: 80%;

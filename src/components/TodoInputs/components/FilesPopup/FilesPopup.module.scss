@@ -105,3 +105,9 @@
         background-color: rgba(167, 186, 194, 0.797);
     }
 }
+
+@media screen and (max-width: 600px) {
+    .popup_inner{
+        max-width: 90%;
+    } 
+}

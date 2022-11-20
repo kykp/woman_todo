@@ -69,14 +69,18 @@
     display: flex;   
     flex-direction: column;
     justify-content: center;
-    gap: 10px;
-
+    gap: 10px; 
     & button { 
         margin: 0 auto;
-        width: 150px;
-        border: 1px solid black;
+        width: 150px; 
+        box-shadow: 0px 0px 14px rgba(112, 121, 153, 0.3);
         border-radius: 5px;
         padding: 2px 2px;
+        background: transparent;
+        &:hover {
+            cursor: pointer;
+        }
+
     }
 }
 @media screen and (max-width: 700px) {

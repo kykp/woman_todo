@@ -106,7 +106,7 @@ export const TodoInputs = () => {
     <>
       {error && <Error error={error} />}
       <div className={styles.todo_inputs_block}>
-        <div className={styles.title_and_time_block}>
+        <div className={styles.title_block}>
           <input
             onChange={onHandleChangeInput}
             placeholder="Введите заголовок"

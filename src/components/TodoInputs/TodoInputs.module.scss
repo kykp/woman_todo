@@ -11,10 +11,8 @@
     border-radius: 15px;
     padding: 5px 5px;
 }
-.title_and_time_block{
-    display: flex;
-    padding-bottom: 1px;
-    background: $bgc-main;
+.title_block{
+    display: flex;  
 }
 .title_input {  
     flex-grow: 1;

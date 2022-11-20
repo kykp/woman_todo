@@ -6,9 +6,7 @@ import {
   toggleTodo,
   setExpiredTodo,
 } from "../../store/todo/todosSlice";
-import { RiDeleteBin7Line as DeleteBox } from "react-icons/ri";
-import { MdOutlineCloudDone as Completed } from "react-icons/md";
-import { FaPen as Change } from "react-icons/fa";
+
 import { useAppDispatch } from "../../helper/hook";
 import {
   deleteTodoFromDB,
@@ -18,8 +16,10 @@ import {
 import { Popup } from "../Popup/Popup";
 import { FilesPopup } from "../TodoInputs/components/FilesPopup/FilesPopup";
 import { getDownloadURL } from "firebase/storage";
+
 import clsx from "clsx";
 import dayjs from "dayjs";
+import { BlockImages } from "./components/BlockImages/BlockImages";
 const currentDate = new Date().toISOString().split("T")[0];
 
 export const TodoItem = ({
@@ -32,6 +32,8 @@ export const TodoItem = ({
   isExpiried,
   isFiled,
 }: ITodo) => {
+  const dispatch = useAppDispatch();
+
   const [showPopupChangeTitle, setShowPopupChangeTitle] = useState(false);
   const [showPopupFiles, setShowPopupFiles] = useState(false);
   const [urls, setUrls] = useState<string[]>([]);
@@ -52,8 +54,6 @@ export const TodoItem = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [date]);
-
-  const dispatch = useAppDispatch();
 
   const onHandleDeleteTodo = () => {
     dispatch(deleteTodo({ id }));
@@ -91,20 +91,10 @@ export const TodoItem = ({
       )}
     >
       <div className={styles.block_controls}>
-        <Completed
-          title="Пометить как выполнено"
-          onClick={onHandleToggleTodoCompleted}
-          className={styles.image}
-        />
-        <Change
-          title="Изменить задачу"
-          className={styles.image}
-          onClick={onHandlePopupChangeTitle}
-        />
-        <DeleteBox
-          title="Удалить задачу"
-          className={styles.image}
-          onClick={onHandleDeleteTodo}
+        <BlockImages
+          onHandleDeleteTodo={onHandleDeleteTodo}
+          onHandleToggleTodoCompleted={onHandleToggleTodoCompleted}
+          onHandlePopupChangeTitle={onHandlePopupChangeTitle}
         />
         {isCompleted && (
           <div className={styles.todo_status}>

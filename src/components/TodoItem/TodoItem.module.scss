@@ -72,11 +72,7 @@
     right: 0;
     position: absolute; 
 }
-.image {
-    &:hover {
-        cursor: pointer;
-    }
-}
+
 .header {
     display: flex;
     justify-content: space-between;

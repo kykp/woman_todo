@@ -16,18 +16,14 @@
 }
 .title_input {  
     flex-grow: 1;
-    padding: 0px 10px; 
-    
+    padding: 0px 10px;  
 }
 .date_input {  
     width: 20px;
     display: flex; 
     justify-content: center;
-    align-items: center;
-    
-}
-
-
+    align-items: center; 
+} 
 .body_title { 
     display: flex;  
     &_input { 
@@ -37,17 +33,14 @@
 }
 .file_input { 
     margin: 0 auto; 
-} 
- 
- 
-
+}  
 .button {
     display: flex;
     float: right;
     justify-content: center;
     align-items: center;
     border: 1px solid black;
-    width: 622px; 
+    width: 100%; 
     height: 60px;    
     transition: all 1s ease-in-out;
     &:hover {
@@ -57,10 +50,9 @@
     }
 }
 
-.error_block{
-    display: flex;
-    justify-content: center;
-}
-.error_message{
-    color: red;
+@media screen and (max-width: 500px) {
+     .todo_inputs_block {
+        width: 300px;  
+    }
+    
 }

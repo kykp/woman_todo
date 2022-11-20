@@ -4,8 +4,10 @@ import styles from "./TodoInputs.module.scss";
 import { addTodo } from "../../store/todo/todosSlice";
 import { useAppDispatch } from "../../helper/hook";
 import { ITodo } from "../../store/todo/todosSlice";
-import { v4 } from "uuid";
 import { addTodoToDB, attachImages } from "../../helper/firebase";
+import { Error } from "./components/Error/Error";
+
+import { v4 } from "uuid";
 
 const deafultTodo: ITodo = {
   id: "",
@@ -87,17 +89,12 @@ export const TodoInputs = () => {
     if (error !== "") {
       setTimeout(() => {
         setError("");
-      }, 5000);
+      }, 3000);
     }
   }, [error]);
-  console.log(todoData);
   return (
     <>
-      {error && (
-        <div className={styles.error_block}>
-          <h2 className={styles.error_message}>{error}</h2>
-        </div>
-      )}
+      {error && <Error error={error} />}
       <div className={styles.todo_inputs_block}>
         <div className={styles.title_and_time_block}>
           <input
@@ -134,11 +131,10 @@ export const TodoInputs = () => {
           className={styles.file_input}
           onChange={handleChange}
         />
+        <button onClick={createTodo} className={styles.button}>
+          Enter
+        </button>
       </div>
-
-      <button onClick={createTodo} className={styles.button}>
-        Enter
-      </button>
     </>
   );
 };

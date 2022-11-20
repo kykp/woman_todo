@@ -1,0 +1,40 @@
+@import "../../../../index.module.scss";
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; 
+    font-size: $fs-main;
+
+    &_img {   
+        display: flex;
+        justify-content: center;
+        align-items:center;
+        flex-grow: 1;
+        font-size: 20px;
+        gap: 10px; 
+    }
+    &_date {    
+        display: flex;   
+        justify-content: center;
+        align-items:center;
+        
+    }
+}
+.image {
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 5px;
+    background: rgba(112, 121, 153, 0.3); 
+    border-radius: 5px; 
+    max-height: 30px;
+    font-size: $fs-low-resolution;
+} 

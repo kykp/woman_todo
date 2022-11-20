@@ -89,15 +89,7 @@
     padding: 2px 5px;  
     
 } 
-.date {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(112, 121, 153, 0.3);
-    width: 30%;
-    border-radius: 5px; 
-    max-height: 30px;
-} 
+
 .todo_status_have_files {
     display: flex;
     justify-content: center;
@@ -115,4 +107,11 @@
     &:hover {
         cursor: pointer;
     }
+}
+
+@media screen and (max-width: 500px) {
+    .todo_item{
+        font-size: 10px;
+    }
+    
 }

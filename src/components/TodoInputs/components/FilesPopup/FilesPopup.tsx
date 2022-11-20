@@ -31,9 +31,8 @@ export const FilesPopup = (props: PopupProps) => {
           </div>
         </div>
         <div className={styles.block_button}>
-          <button className={styles.button}>Сохранить</button>
           <button className={styles.button} onClick={onHandlePopup}>
-            Отменить
+            Закрыть
           </button>
         </div>
         <button className={styles.close_btn} onClick={onHandlePopup}>

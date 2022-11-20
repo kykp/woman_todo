@@ -24,7 +24,8 @@ export const TodoInputs = () => {
   const [filesUpload, setFilesUpload] = useState<File[]>([]);
   const [attachedFilesNames, setAttachedFilesNames] = useState<string[]>([]);
   const [error, setError] = useState("");
-
+  const [showAddFiles, setShowAddFiles] = useState(false);
+  const [showAddDate, setShowAddDate] = useState(false);
   const dispatch = useAppDispatch();
   const uniqueId = v4();
   const filesRef = useRef<HTMLInputElement>(null);
@@ -54,6 +55,8 @@ export const TodoInputs = () => {
       setTodoDate(deafultTodo);
       resetFileInput();
       setFilesUpload([]);
+      setShowAddFiles(false);
+      setShowAddDate(false);
     }
   };
   const onHandleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
@@ -92,6 +95,13 @@ export const TodoInputs = () => {
       }, 3000);
     }
   }, [error]);
+
+  const onHandleSetData = () => {
+    setShowAddDate(true);
+  };
+  const onHandleSetFiles = () => {
+    setShowAddFiles(true);
+  };
   return (
     <>
       {error && <Error error={error} />}
@@ -105,13 +115,6 @@ export const TodoInputs = () => {
             value={todoData.title}
             className={styles.title_input}
           />
-          <input
-            onChange={onHandleChangeInput}
-            type="date"
-            name="date"
-            value={todoData.date}
-            className={styles.date_input}
-          />
         </div>
         <div className={styles.body_title}>
           <textarea
@@ -120,17 +123,35 @@ export const TodoInputs = () => {
             onKeyDown={onHandleKeyDown}
             onChange={onHandleChangeInput}
             placeholder="Введите задачу"
-            className={styles.body_title_input}
+            className={styles.body_input}
           />
         </div>
-        <input
-          type="file"
-          title="Прикрепит файл"
-          multiple
-          ref={filesRef}
-          className={styles.file_input}
-          onChange={handleChange}
-        />
+        <div className={styles.chosen_block}>
+          {showAddFiles ? (
+            <input
+              type="file"
+              title="Прикрепит файл"
+              multiple
+              ref={filesRef}
+              className={styles.file_input}
+              onChange={handleChange}
+            />
+          ) : (
+            <button onClick={onHandleSetFiles}>Добавить файлы</button>
+          )}
+          {showAddDate ? (
+            <input
+              onChange={onHandleChangeInput}
+              type="date"
+              name="date"
+              value={todoData.date}
+              className={styles.date_input}
+            />
+          ) : (
+            <button onClick={onHandleSetData}>Установить дату</button>
+          )}
+        </div>
+
         <button onClick={createTodo} className={styles.button}>
           Enter
         </button>

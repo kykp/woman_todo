@@ -19,7 +19,7 @@ import { getDownloadURL } from "firebase/storage";
 
 import clsx from "clsx";
 import dayjs from "dayjs";
-import { BlockImages } from "./components/BlockImages/BlockImages";
+import { HeaderItemBlock } from "./components/HeaderBlock/HeaderItemBlock";
 const currentDate = new Date().toISOString().split("T")[0];
 
 export const TodoItem = ({
@@ -91,10 +91,11 @@ export const TodoItem = ({
       )}
     >
       <div className={styles.block_controls}>
-        <BlockImages
+        <HeaderItemBlock
           onHandleDeleteTodo={onHandleDeleteTodo}
           onHandleToggleTodoCompleted={onHandleToggleTodoCompleted}
           onHandlePopupChangeTitle={onHandlePopupChangeTitle}
+          date={date}
         />
         {isCompleted && (
           <div className={styles.todo_status}>
@@ -117,7 +118,6 @@ export const TodoItem = ({
       </div>
       <div className={styles.header}>
         <span className={styles.title}>{title}</span>
-        {date !== "" && <span className={styles.date}>{date}</span>}
       </div>
       <div className={styles.body}>
         <span className={styles.title}>{textBody}</span>

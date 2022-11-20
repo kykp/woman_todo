@@ -9,11 +9,13 @@ export const Todo = () => {
   const todos = useAppSelector(selectAllTodos);
   return (
     <div className={styles.todo_page}>
-      <ul className={styles.todo_items}>
-        {todos.map((todo) => (
-          <TodoItem key={todo.id} {...todo} />
-        ))}
-      </ul>
+      {todos.length > 0 && (
+        <ul className={styles.todo_items}>
+          {todos.map((todo) => (
+            <TodoItem key={todo.id} {...todo} />
+          ))}
+        </ul>
+      )}
       <TodoInputs />
     </div>
   );

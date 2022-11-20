@@ -41,15 +41,6 @@ const getArrayWithFBId = async () => {
   return currentArray;
 };
 
-const changeTodoStatusImageUpload = async (id: string) => {
-  const currentArray = await getArrayWithFBId();
-  const currentTodo = currentArray.find((todo) => todo.id === id);
-  if (currentTodo) {
-    const washingtonRef = doc(db, "todos", currentTodo.fbId);
-    await updateDoc(washingtonRef, { isFiled: !currentTodo.isFiled });
-  }
-};
-
 export const addTodoToDB = async (todoData: ITodo) => {
   const todoRef = collection(db, "todos");
   await setDoc(doc(todoRef), todoData);

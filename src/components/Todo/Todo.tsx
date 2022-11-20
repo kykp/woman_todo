@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./Todo.module.scss";
 
 import { TodoItem } from "../TodoItem/TodoItem";
@@ -7,8 +7,6 @@ import { selectAllTodos } from "../../store/todo/selectors";
 import { TodoInputs } from "../TodoInputs/TodoInputs";
 export const Todo = () => {
   const todos = useAppSelector(selectAllTodos);
-
-  console.log(todos);
   return (
     <div className={styles.todo_page}>
       <ul className={styles.todo_items}>

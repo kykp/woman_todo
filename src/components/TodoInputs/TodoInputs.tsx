@@ -153,7 +153,7 @@ export const TodoInputs = () => {
         </div>
 
         <button onClick={createTodo} className={styles.button}>
-          Enter
+          Ввод
         </button>
       </div>
     </>

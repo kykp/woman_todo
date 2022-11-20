@@ -56,3 +56,11 @@
         background-color: rgb(29, 81, 166);
     }
 }
+
+.error_block{
+    display: flex;
+    justify-content: center;
+}
+.error_message{
+    color: red;
+}

@@ -3,6 +3,7 @@ export type PopupProps = {
   className?: string;
   children?: any;
   id: string;
+  attachedFiles: string[];
   title: string;
   textBody: string;
   urls: string[];

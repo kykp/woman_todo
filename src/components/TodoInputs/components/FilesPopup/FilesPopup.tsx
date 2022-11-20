@@ -3,7 +3,7 @@ import styles from "./FilesPopup.module.scss";
 import { PopupProps } from "./TypeFilesProps";
 
 export const FilesPopup = (props: PopupProps) => {
-  const { urls, onHandlePopup } = props;
+  const { urls, onHandlePopup, attachedFiles } = props;
 
   const onHandleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     if (e.key === "Enter") {
@@ -23,9 +23,9 @@ export const FilesPopup = (props: PopupProps) => {
                 rel="noreferrer"
                 target="_blank"
               >
-                <button className={styles.file_button}>{`File ${
-                  index + 1
-                }`}</button>
+                <button
+                  className={styles.file_button}
+                >{`${attachedFiles[index]}`}</button>
               </a>
             ))}
           </div>

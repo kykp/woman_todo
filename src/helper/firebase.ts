@@ -9,14 +9,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  listAll,
-  list,
-  ListResult,
-} from "firebase/storage";
+import { ref, uploadBytes, listAll, deleteObject } from "firebase/storage";
 type DataBaseTodo = {
   fbId: string;
   id: string;
@@ -34,7 +27,6 @@ const getArrayWithFBId = async () => {
   const currentArray: DataBaseTodo[] = [];
   docsSnap.forEach((doc: any): void => {
     const todo = doc.data();
-    console.log(todo);
     currentArray.push({
       id: todo.id,
       title: todo.title,
@@ -48,15 +40,33 @@ const getArrayWithFBId = async () => {
   });
   return currentArray;
 };
+
+const changeTodoStatusImageUpload = async (id: string) => {
+  const currentArray = await getArrayWithFBId();
+  const currentTodo = currentArray.find((todo) => todo.id === id);
+  if (currentTodo) {
+    const washingtonRef = doc(db, "todos", currentTodo.fbId);
+    await updateDoc(washingtonRef, { isFiled: !currentTodo.isFiled });
+  }
+};
+
 export const addTodoToDB = async (todoData: ITodo) => {
   const todoRef = collection(db, "todos");
   await setDoc(doc(todoRef), todoData);
 };
-export const deleteTodoFromDB = async (id: string) => {
+
+export const deleteTodoFromDB = async (id: string, filesNames: string[]) => {
   const currentArray = await getArrayWithFBId();
   const deletTodo = currentArray.find((todo) => todo.id === id);
   if (deletTodo) {
     await deleteDoc(doc(db, "todos", deletTodo.fbId));
+    if (deletTodo.isFiled) {
+      filesNames.forEach(async (file) => {
+        const filesListRef = ref(storage, `${id}/${file}`);
+        await deleteObject(filesListRef);
+      });
+      console.log("all files was deleted");
+    }
   }
 };
 
@@ -86,21 +96,18 @@ export const attachImages = async (files: File[], id: string) => {
   files.map(async (file: any) => {
     const imageRef = ref(storage, `${id}/${file.name}`);
     await uploadBytes(imageRef, file).then(() => {
-      console.log("uploaded finished");
+      // changeTodoStatusImageUpload(id);
+      console.log("files was uploaded");
     });
   });
 };
 
 export const getUrl = async (id: string) => {
   const filesListRef = ref(storage, `${id}/`);
-
   const list = await listAll(filesListRef);
-
   const arr: any[] = [];
-
   list.items.forEach(async (el) => {
     arr.push(el);
   });
-
   return arr;
 };

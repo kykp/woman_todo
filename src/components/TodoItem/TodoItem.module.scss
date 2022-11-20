@@ -115,4 +115,8 @@
     top: -5px;
     left: 0;
     position: absolute; 
+
+    &:hover {
+        cursor: pointer;
+    }
 }

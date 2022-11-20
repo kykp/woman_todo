@@ -5,6 +5,7 @@ export interface ITodo {
   textBody: string;
   isCompleted: boolean;
   isFiled: boolean;
+  attachedFiles: string[];
   date: string;
   isExpiried: boolean;
 }

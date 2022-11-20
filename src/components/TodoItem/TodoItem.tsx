@@ -15,13 +15,11 @@ import {
   getUrl,
   toggleTodoCompleted,
 } from "../../helper/firebase";
-import clsx from "clsx";
-import dayjs from "dayjs";
-
 import { Popup } from "../Popup/Popup";
 import { FilesPopup } from "../TodoInputs/components/FilesPopup/FilesPopup";
-import { ref, getDownloadURL, listAll } from "firebase/storage";
-import { storage } from "../../firebase";
+import { getDownloadURL } from "firebase/storage";
+import clsx from "clsx";
+import dayjs from "dayjs";
 const currentDate = new Date().toISOString().split("T")[0];
 
 export const TodoItem = ({
@@ -29,6 +27,7 @@ export const TodoItem = ({
   title,
   textBody,
   date,
+  attachedFiles,
   isCompleted,
   isExpiried,
   isFiled,
@@ -42,16 +41,6 @@ export const TodoItem = ({
   };
 
   const onHandlePopupShowFiles = async () => {
-    if (urls.length > 0) {
-      setUrls([]);
-    } else {
-      const array = await getUrl(id);
-      array.forEach(async (el) => {
-        const item = await getDownloadURL(el);
-        setUrls((prev) => [...prev, item]);
-      });
-    }
-
     setShowPopupFiles(!showPopupFiles);
   };
   const date1 = dayjs(currentDate);
@@ -66,9 +55,9 @@ export const TodoItem = ({
 
   const dispatch = useAppDispatch();
 
-  const onHandleDeleteTodo = async () => {
+  const onHandleDeleteTodo = () => {
     dispatch(deleteTodo({ id }));
-    deleteTodoFromDB(id);
+    deleteTodoFromDB(id, attachedFiles);
   };
 
   const onHandleToggleTodoCompleted = () => {
@@ -76,7 +65,23 @@ export const TodoItem = ({
     dispatch(toggleTodo({ id }));
   };
 
-  console.log(urls);
+  useEffect(() => {
+    async function getUrls() {
+      const array = await getUrl(id);
+      array.forEach(async (el) => {
+        const item = await getDownloadURL(el);
+        setUrls((prev) => [...prev, item]);
+      });
+    }
+
+    if (showPopupFiles) {
+      getUrls();
+    }
+
+    return () => setUrls([]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showPopupFiles]);
+
   return (
     <li
       className={clsx(
@@ -138,6 +143,7 @@ export const TodoItem = ({
         trigger={showPopupFiles}
         id={id}
         urls={urls}
+        attachedFiles={attachedFiles}
         title={title}
         textBody={textBody}
         onHandlePopup={onHandlePopupShowFiles}

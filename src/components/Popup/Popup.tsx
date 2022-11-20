@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./popup.module.scss";
+import styles from "./Popup.module.scss";
 import { PopupProps } from "./typeProps";
 import { useAppDispatch } from "../../helper/hook";
 import { changeTodoTextFields } from "../../store/todo/todosSlice";

@@ -84,7 +84,7 @@
     border: 1px solid black;
 }
 .button {
-    border: 1px solid black;
+    box-shadow: 0px 0px 14px rgba(112, 121, 153, 0.3);
     transition: background-color 0.4s ease-in-out;
     &:hover {
         cursor: pointer;
@@ -93,7 +93,7 @@
 } 
 .file_button {
     width: 200px;
-    border: 1px solid black;
+    box-shadow: 0px 0px 14px rgba(112, 121, 153, 0.3);
     transition: background-color 0.4s ease-in-out;
     &:hover {
         cursor: pointer;
